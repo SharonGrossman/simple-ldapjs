@@ -1,0 +1,56 @@
+{
+  "name": "simple-ldapjs",
+  "version": "0.0.0",
+  "description": "A simple way to find a user using ldapjs",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "run-p lint-*",
+    "lint-src": "eslint src --fix",
+    "precommit": "lint-staged",
+    "babel": "babel src -d lib -s",
+    "build": "rimraf lib && npm run babel",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SharonGrossman/simple-ldapjs.git"
+  },
+  "keywords": [
+    "ldapjs"
+  ],
+  "author": "Sharon Grossman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SharonGrossman/simple-ldapjs/issues"
+  },
+  "homepage": "https://github.com/SharonGrossman/simple-ldapjs#readme",
+  "engines": {
+    "node": ">=4"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-istanbul": "^0.11.0",
+    "babel-preset-env": "0.0.6",
+    "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.14",
+    "eslint": "^3.8.1",
+    "eslint-config-noamokman": "^5.0.0",
+    "husky": "^0.11.9",
+    "lint-staged": "^3.2.0",
+    "mocha": "^3.0.2",
+    "npm-run-all": "^3.1.1",
+    "rimraf": "^2.5.4"
+  },
+  "dependencies": {
+    "ldapjs": "^1.0.1",
+    "nested-error-stacks": "^2.0.0",
+    "pify": "^2.3.0"
+  }
+}
