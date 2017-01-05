@@ -1,6 +1,6 @@
 {
   "name": "simple-ldapjs",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple way to find a user using ldapjs",
   "main": "lib/index.js",
   "scripts": {
