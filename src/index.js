@@ -2,16 +2,16 @@ import ldapjs from 'ldapjs';
 import pify from 'pify';
 import SimpleLdapError from './simple-ldap-error';
 
-export default pify(({principal = {}, url = process.env.LDAP_URL, user = process.env.LDAP_USER, password = process.env.LDAP_PASSWORD, ou = process.env.LDAP_OU} = {}) => {
+export default pify(({principal = {}, url = process.env.LDAP_URL, user = process.env.LDAP_USER, password = process.env.LDAP_PASSWORD, ou = process.env.LDAP_OU} = {}, cb) => {
   if (!url || !user || !password || !ou) {
     throw new SimpleLdapError('Simple LDAP failed at initializing the required parameters');
   }
 
   const client = ldapjs.createClient({url});
 
-  return client.bind(user, password, err => {
+  client.bind(user, password, err => {
     if (err) {
-      throw new SimpleLdapError('Simple LDAP failed at binding to the user and password', err);
+      return cb(new SimpleLdapError('Simple LDAP failed at binding to the user and password', err));
     }
 
     client.search(ou, {
@@ -19,7 +19,7 @@ export default pify(({principal = {}, url = process.env.LDAP_URL, user = process
       scope: 'sub'
     }, (err, res) => {
       if (err) {
-        throw new SimpleLdapError('Simple LDAP failed at searching and finding the user', err);
+        return cb(new SimpleLdapError('Simple LDAP failed at searching and finding the user', err));
       }
 
       let found;
@@ -32,14 +32,14 @@ export default pify(({principal = {}, url = process.env.LDAP_URL, user = process
       res.on('end', res => {
         client.unbind(err => {
           if (err) {
-            throw new SimpleLdapError('Simple LDAP failed at unbinding the client', err);
+            return cb(new SimpleLdapError('Simple LDAP failed at unbinding the client', err));
           }
 
           if (res.status !== 0) {
-            throw new SimpleLdapError(`Simple LDAP failed with status code ${res.status}`);
+            return cb(new SimpleLdapError(`Simple LDAP failed with status code ${res.status}`));
           }
 
-          return found;
+          return cb(null, found);
         });
       });
     });
