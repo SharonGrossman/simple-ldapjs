@@ -15,7 +15,7 @@ export default pify(({principal = {}, url = process.env.LDAP_URL, user = process
     }
 
     client.search(ou, {
-      filter: `userPrincipalName=${principal}`,
+      filter: `mail=${principal}`,
       scope: 'sub'
     }, (err, res) => {
       if (err) {
