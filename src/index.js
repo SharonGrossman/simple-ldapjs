@@ -2,7 +2,7 @@ import ldapjs from 'ldapjs';
 import pify from 'pify';
 import SimpleLdapError from './simple-ldap-error';
 
-export default pify(({principal = {}, url = process.env.LDAP_URL, user = process.env.LDAP_USER, password = process.env.LDAP_PASSWORD, ou = process.env.LDAP_OU} = {}, cb) => {
+export default pify(({principal = {}, url = process.env.LDAP_URL, user = process.env.LDAP_USER, password = process.env.LDAP_PASSWORD, ou = process.env.LDAP_OU, field = process.env.LDAP_FIELD || 'userPrincipalName'} = {}, cb) => {
   if (!url || !user || !password || !ou) {
     throw new SimpleLdapError('Simple LDAP failed at initializing the required parameters');
   }
@@ -15,7 +15,7 @@ export default pify(({principal = {}, url = process.env.LDAP_URL, user = process
     }
 
     client.search(ou, {
-      filter: `mail=${principal}`,
+      filter: `${field}=${principal}`,
       scope: 'sub'
     }, (err, res) => {
       if (err) {

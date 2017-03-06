@@ -12,6 +12,7 @@ $ LDAP_USER=ldap_user
 $ LDAP_PASSWORD=ldap_user_password
 $ LDAP_URL=ldap://dns.net
 $ LDAP_OU=OU=Example
+$ LDAP_FIELD=mail
 
 import ldap from 'simple-ldapjs';
 
@@ -23,7 +24,8 @@ User.findOne(principle)
       ou: 'OU=example',
       url: 'ldap://dns.net',
       user: 'ldap_user', 
-      password: 'ldap_password'
+      password: 'ldap_password',
+      field: 'mail'
       })
       .then(foundUser => {
          // foundUser is the matching AD user of the principle
