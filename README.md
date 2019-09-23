@@ -1,5 +1,7 @@
 # simple-ldapjs
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SharonGrossman/simple-ldapjs.svg)](https://greenkeeper.io/)
+
 ## Installation
 ``` bash
 $ [sudo] npm install simple-ldapjs --save
